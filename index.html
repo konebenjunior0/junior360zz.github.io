@@ -80,6 +80,12 @@
     .unlock {
       background-color: #007bff;
       box-shadow: 0 0 10px #00ffcc;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { box-shadow: 0 0 5px #00ffcc; }
+      to { box-shadow: 0 0 20px #00ffcc; }
     }
   </style>
 </head>
@@ -91,7 +97,7 @@
     <button id="boutonVisite" disabled>Aller sur mon site 🌍</button>
   </a>
 
-  <form onsubmit="return envoyerInfos()">
+  <form onsubmit="return verifierInfos()">
     <h3>Entre tes infos 👇</h3>
     <input type="text" id="nom" placeholder="Ton nom" required>
     <input type="number" id="age" placeholder="Ton âge" required>
@@ -101,22 +107,29 @@
   </form>
 
   <script>
-    function envoyerInfos() {
+    const motDePasseCorrect = "junior360"; // 🔑 change ici le mot de passe que tu veux
+
+    function verifierInfos() {
       const nom = document.getElementById('nom').value.trim();
       const age = parseInt(document.getElementById('age').value);
       const email = document.getElementById('email').value.trim();
       const motDePasse = document.getElementById('motDePasse').value;
 
-      if (nom && age > 10 && email.includes('@') && motDePasse.length >= 4) {
-        alert(`Merci ${nom} (${age} ans) ! Tes infos sont validées ✅`);
-        const bouton = document.getElementById('boutonVisite');
-        bouton.disabled = false;
-        bouton.classList.add("unlock");
-      } else {
-        alert("⚠️ Remplis bien toutes les infos avant de continuer !");
+      if (motDePasse !== motDePasseCorrect) {
+        alert("❌ Mot de passe incorrect !");
+        return false;
       }
 
-      return false; // Empêche l’envoi réel du formulaire
+      if (!nom || age <= 10 || !email.includes('@')) {
+        alert("⚠️ Remplis correctement toutes les infos !");
+        return false;
+      }
+
+      alert(`✅ Bienvenue ${nom} (${age} ans) ! Accès autorisé 🎉`);
+      const bouton = document.getElementById('boutonVisite');
+      bouton.disabled = false;
+      bouton.classList.add("unlock");
+      return false; // on empêche le rechargement de la page
     }
   </script>
 </body>
