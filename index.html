@@ -2,97 +2,120 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Boutique de Junior 🛍️</title>
+  <title>Site de Junior 😎</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
       margin: 0;
       padding: 0;
-      background-color: #111;
-      color: white;
-      text-align: center;
+      background: url('IMG_1864.jpeg') no-repeat center center fixed;
+      background-size: cover;
     }
 
     h1 {
-      margin-top: 30px;
+      margin-top: 80px;
       font-size: 40px;
+      text-shadow: 2px 2px 5px black;
     }
 
-    .produits {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      margin: 50px auto;
-      max-width: 1200px;
+    p {
+      margin-top: -5px;
+      font-size: 22px;
+      text-shadow: 1px 1px 4px black;
     }
 
-    .produit {
-      background-color: #222;
-      border-radius: 15px;
-      padding: 20px;
-      width: 320px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-      transition: transform 0.3s;
+    .btn-container {
+      margin-top: 30px;
     }
 
-    .produit:hover {
-      transform: scale(1.05);
-    }
-
-    .produit img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .produit h2 {
-      font-size: 28px;
-      margin: 15px 0 10px;
-    }
-
-    .produit p {
-      font-size: 20px;
-      margin: 10px 0;
-    }
-
-    .prix {
-      color: #00ff99;
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 12px 25px;
+    button {
       background-color: #007bff;
       color: white;
-      text-decoration: none;
-      border-radius: 8px;
       font-size: 20px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
       transition: 0.3s;
     }
 
-    .btn:hover {
+    button:hover {
       background-color: #0056b3;
+      transform: scale(1.05);
     }
 
+    form {
+      background-color: rgba(0, 0, 0, 0.8);
+      display: inline-block;
+      margin-top: 20px;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      width: 330px;
+    }
+
+    input {
+      display: block;
+      width: 90%;
+      padding: 12px;
+      margin: 8px auto;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .submit-btn {
+      background-color: #28a745;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      background-color: #1e7e34;
+    }
   </style>
 </head>
 <body>
+  <h1>Bienvenue sur le site de Junior 😎</h1>
+  <p>Clique sur un bouton pour continuer :</p>
 
-  <h1>🛒 Boutique de Junior 😎</h1>
-
-  <div class="produits">
-    <!-- PRODUIT 1 -->
-    <div class="produit">
-      <img src="EF9DA5D6-ACDC-4C56-A6E6-05285C50B587.jpeg" alt="Manette PS4">
-      <h2>Manette PlayStation 4</h2>
-      <p>Compatible tous modèles PS4<br>Plusieurs couleurs disponibles 🎮</p>
-      <div class="prix">13 000 F CFA</div>
-      <a href="panier.html" class="btn">Acheter maintenant 🛍️</a>
-    </div>
+  <div class="btn-container">
+    <a href="https://heylink.me/beendojr/" target="_blank">
+      <button>Aller sur mon site 🌍</button>
+    </a>
+    <a href="boutique.html" target="_blank">
+      <button>Boutique 🛒</button>
+    </a>
   </div>
 
+  <form onsubmit="return envoyerInfos()">
+    <h3>Entre tes infos 👇</h3>
+    <input type="text" id="nom" placeholder="Ton nom" required>
+    <input type="number" id="age" placeholder="Ton âge" required>
+    <input type="email" id="email" placeholder="Ton e-mail" required>
+    <input type="password" id="motDePasse" placeholder="Ton mot de passe" required>
+    <button type="submit" class="submit-btn">Envoyer ✉️</button>
+  </form>
+
+  <script>
+    function envoyerInfos() {
+      const nom = document.getElementById('nom').value;
+      const age = document.getElementById('age').value;
+      const email = document.getElementById('email').value;
+      const motDePasse = document.getElementById('motDePasse').value;
+
+      if (!nom || !age || !email || !motDePasse) {
+        alert("Remplis tous les champs avant de continuer !");
+        return false;
+      }
+
+      alert(`Merci ${nom} (${age} ans) ! Ton e-mail (${email}) a bien été enregistré 🎉`);
+      window.location.href = "https://heylink.me/beendojr/";
+      return false;
+    }
+  </script>
 </body>
 </html>
