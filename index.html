@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <title>Site de Junior 😎</title>
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       height: 100vh;
       background-image: url('IMG_1864.jpeg');
       background-size: cover;
@@ -18,61 +23,70 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      backdrop-filter: brightness(0.95);
     }
 
     h1 {
-      font-size: 45px;
-      margin-bottom: 0px; /* rapproché */
+      font-size: 42px;
+      margin-bottom: 2px; /* Très rapproché */
       text-shadow: 2px 2px 5px black;
     }
 
     p {
-      font-size: 20px;
-      margin: 2px 0 8px 0; /* rapproché */
+      font-size: 18px;
+      margin: 2px 0 4px 0; /* rapproché */
       text-shadow: 1px 1px 3px black;
     }
 
+    a button {
+      font-size: 17px;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      margin: 4px 0;
+      transition: 0.3s;
+    }
+
+    a button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
     form {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 18px;
-      border-radius: 12px;
-      width: 320px;
-      margin-top: 6px; /* rapproché du bouton */
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 10px 15px;
+      border-radius: 10px;
+      width: 300px;
+      margin-top: 4px; /* rapproché du bouton */
+    }
+
+    h3 {
+      margin-bottom: 5px; /* rapproché */
     }
 
     input {
       width: 90%;
-      padding: 10px;
-      font-size: 17px;
-      margin: 4px 0; /* rapproché */
+      padding: 8px;
+      font-size: 15px;
+      margin: 3px 0; /* très rapproché */
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       text-align: center;
-    }
-
-    button {
-      font-size: 18px;
-      padding: 10px 22px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 5px;
-      transition: 0.3s;
-    }
-
-    .site-btn {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .site-btn:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
     }
 
     .submit-btn {
       background-color: #28a745;
       color: white;
+      padding: 8px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 5px;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
     .submit-btn:hover {
@@ -86,7 +100,7 @@
   <p>Clique sur le bouton pour visiter mon site :</p>
 
   <a href="https://heylink.me/beendojr/" target="_blank">
-    <button class="site-btn">Aller sur mon site 🌍</button>
+    <button>Aller sur mon site 🌍</button>
   </a>
 
   <form onsubmit="return envoyerInfos()">
