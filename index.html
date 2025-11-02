@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Site de Junior 😎</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -34,9 +36,9 @@
       background-color: #007bff;
       color: white;
       font-size: 20px;
-      padding: 12px 25px;
+      padding: 14px 28px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       margin: 10px;
       transition: 0.3s;
@@ -50,21 +52,21 @@
     form {
       background-color: rgba(0, 0, 0, 0.8);
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 25px;
       padding: 35px;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-      width: 330px;
+      width: 340px;
     }
 
     input {
       display: block;
       width: 90%;
-      padding: 12px;
-      margin: 8px auto;
+      padding: 14px;
+      margin: 10px auto;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .submit-btn {
@@ -75,6 +77,37 @@
 
     .submit-btn:hover {
       background-color: #1e7e34;
+    }
+
+    /* 🔹 Version mobile : agrandir tout automatiquement */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 55px;
+        margin-top: 60px;
+      }
+
+      p {
+        font-size: 26px;
+      }
+
+      button {
+        font-size: 24px;
+        padding: 18px 35px;
+      }
+
+      form {
+        width: 90%;
+        padding: 40px;
+      }
+
+      input {
+        font-size: 22px;
+        padding: 16px;
+      }
+
+      h3 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
