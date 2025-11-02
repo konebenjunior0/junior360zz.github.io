@@ -1,27 +1,208 @@
-import random
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jeu : Devine le nombre</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg,#f6f9ff,#e8f0ff);
+      padding: 24px;
+    }
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      box-shadow: 0 10px 25px rgba(20,30,60,0.08);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    h1 { margin: 0 0 8px 0; font-size: 1.3rem; }
+    p.lead { margin: 0 0 16px 0; color: #374151; }
+    .row { display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
+    label { font-size:0.9rem; color:#374151; }
+    select, input[type="number"], button {
+      padding:8px 10px;
+      font-size:1rem;
+      border-radius:8px;
+      border:1px solid #d1d5db;
+    }
+    button { cursor:pointer; background:#2563eb; color:white; border:none; }
+    button.secondary { background:#efefef; color:#111827; border:1px solid #e5e7eb; }
+    .status { margin-top:12px; padding:12px; border-radius:8px; background:#f8fafc; min-height:44px; display:flex; align-items:center; gap:8px; color:#0f172a; }
+    .hint { font-weight:600; }
+    .small { font-size:0.9rem; color:#6b7280; }
+    .footer { margin-top:14px; display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+    .success { color: #065f46; font-weight:700; }
+    .fail { color: #991b1b; font-weight:700; }
+    @media (max-width:420px){ .card{ padding:14px } }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="title">
+    <header>
+      <h1 id="title">🎮 Devine le nombre</h1>
+      <p class="lead">L'ordinateur choisit un nombre entre <strong>1</strong> et <strong>20</strong>. Essaie de le deviner.</p>
+    </header>
 
-print("🎮 Bienvenue dans le jeu : Devine le nombre !")
+    <section aria-label="Paramètres du jeu" class="row">
+      <label for="difficulty">Difficulté :</label>
+      <select id="difficulty" aria-describedby="diffHelp">
+        <option value="easy">Facile — 10 essais</option>
+        <option value="medium" selected>Moyen — 5 essais</option>
+        <option value="hard">Difficile — 3 essais</option>
+      </select>
+      <button id="startBtn" type="button">Démarrer le jeu</button>
+      <div id="diffHelp" class="small">Choisis la difficulté puis clique sur "Démarrer le jeu".</div>
+    </section>
 
-# L’ordinateur choisit un nombre aléatoire entre 1 et 20
-nombre_secret = random.randint(1, 20)
+    <section aria-label="Zone de jeu" style="margin-top:8px;">
+      <div class="row">
+        <label for="guessInput">Ton essai :</label>
+        <input id="guessInput" type="number" min="1" max="20" placeholder="1–20" aria-label="Entrez un nombre entre 1 et 20" />
+        <button id="guessBtn" type="button">Essayer</button>
+        <button id="restartBtn" class="secondary" type="button">Réinitialiser</button>
+      </div>
 
-# On donne 5 tentatives au joueur
-tentatives = 5
+      <div class="status" id="status" aria-live="polite">
+        <span class="small">Le jeu n'a pas encore démarré. Clique sur <strong>Démarrer le jeu</strong>.</span>
+      </div>
 
-while tentatives > 0:
-    print(f"\nIl te reste {tentatives} tentatives.")
-    # Le joueur entre un nombre
-    essai = int(input("👉 Devine un nombre entre 1 et 20 : "))
+      <div class="footer">
+        <div class="small">Tentatives restantes : <strong id="attemptsDisplay">—</strong></div>
+        <div class="small">Historique : <span id="history">aucun</span></div>
+      </div>
+    </section>
+  </main>
 
-    if essai == nombre_secret:
-        print("🎉 Bravo ! Tu as trouvé le nombre !")
-        break
-    elif essai < nombre_secret:
-        print("Trop petit ! Essaie encore.")
-    else:
-        print("Trop grand ! Essaie encore.")
+  <script>
+    (function(){
+      const startBtn = document.getElementById('startBtn');
+      const guessBtn = document.getElementById('guessBtn');
+      const restartBtn = document.getElementById('restartBtn');
+      const guessInput = document.getElementById('guessInput');
+      const status = document.getElementById('status');
+      const attemptsDisplay = document.getElementById('attemptsDisplay');
+      const historyEl = document.getElementById('history');
+      const difficultySelect = document.getElementById('difficulty');
 
-    tentatives -= 1
+      let secret = null;
+      let attemptsLeft = 0;
+      let maxAttempts = 0;
+      let gameActive = false;
+      const min = 1, max = 20;
+      let history = [];
 
-if tentatives == 0:
-    print(f"\n😢 Tu as perdu. Le nombre secret était {nombre_secret}.")Fin du chat IA === -->
+      function setStatus(message, cls = '') {
+        status.innerHTML = '';
+        const span = document.createElement('div');
+        span.textContent = message;
+        if (cls) span.className = cls;
+        status.appendChild(span);
+      }
+
+      function updateDisplay() {
+        attemptsDisplay.textContent = attemptsLeft === 0 && !gameActive ? '—' : attemptsLeft;
+        historyEl.textContent = history.length ? history.join(' → ') : 'aucun';
+      }
+
+      function startGame() {
+        const diff = difficultySelect.value;
+        if (diff === 'easy') maxAttempts = 10;
+        else if (diff === 'medium') maxAttempts = 5;
+        else maxAttempts = 3;
+
+        secret = Math.floor(Math.random() * (max - min + 1)) + min;
+        attemptsLeft = maxAttempts;
+        history = [];
+        gameActive = true;
+        guessInput.disabled = false;
+        guessInput.value = '';
+        guessInput.focus();
+        setStatus(`Le jeu a commencé ! Devine un nombre entre ${min} et ${max}.`, '');
+        updateDisplay();
+      }
+
+      function endGame(win=false) {
+        gameActive = false;
+        guessInput.disabled = true;
+        if (win) {
+          setStatus(`🎉 Bravo ! Le nombre était ${secret}.`, 'success');
+        } else {
+          setStatus(`😢 Partie terminée — tu as perdu. Le nombre était ${secret}.`, 'fail');
+        }
+        updateDisplay();
+      }
+
+      function makeGuess() {
+        if (!gameActive) {
+          setStatus("D'abord clique sur 'Démarrer le jeu'.", '');
+          return;
+        }
+        const val = parseInt(guessInput.value, 10);
+        if (Number.isNaN(val)) {
+          setStatus('Veuillez entrer un nombre valide.', 'fail');
+          return;
+        }
+        if (val < min || val > max) {
+          setStatus(`Le nombre doit être entre ${min} et ${max}.`, 'fail');
+          return;
+        }
+
+        // enregistrer l'essai
+        history.push(val);
+        // vérification
+        if (val === secret) {
+          endGame(true);
+          return;
+        }
+
+        attemptsLeft--;
+        if (val < secret) {
+          setStatus('➡️ Trop petit !', '');
+        } else {
+          setStatus('⬅️ Trop grand !', '');
+        }
+
+        if (attemptsLeft <= 0) {
+          endGame(false);
+        } else {
+          updateDisplay();
+          guessInput.value = '';
+          guessInput.focus();
+        }
+      }
+
+      function resetAll() {
+        secret = null;
+        attemptsLeft = 0;
+        maxAttempts = 0;
+        gameActive = false;
+        history = [];
+        guessInput.disabled = false;
+        guessInput.value = '';
+        setStatus("Jeu réinitialisé. Choisis une difficulté puis clique sur 'Démarrer le jeu'.");
+        updateDisplay();
+      }
+
+      // événements
+      startBtn.addEventListener('click', startGame);
+      guessBtn.addEventListener('click', makeGuess);
+      restartBtn.addEventListener('click', resetAll);
+
+      // permettre appuyer "Entrée" pour valider l'essai
+      guessInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') makeGuess();
+      });
+
+      // initialisation visuelle
+      resetAll();
+    })();
+  </script>
+</body>
+</html>
