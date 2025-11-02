@@ -16,29 +16,33 @@
       padding: 0;
       background: url('IMG_1864.jpeg') no-repeat center center fixed;
       background-size: cover;
+      overflow-x: hidden;
     }
 
     h1 {
       margin-top: 80px;
-      font-size: 65px; /* 🔥 Super grand titre */
+      font-size: 65px;
       text-shadow: 3px 3px 8px black;
+      animation: fadeIn 2s ease forwards;
     }
 
     p {
       font-size: 28px;
       margin-top: -20px;
       text-shadow: 2px 2px 6px black;
+      animation: fadeIn 2.2s ease forwards;
     }
 
     button {
       background-color: #007bff;
       color: white;
-      font-size: 28px; /* 🔥 Grand bouton */
+      font-size: 28px;
       padding: 18px 40px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
       transition: 0.3s;
+      animation: fadeIn 2.5s ease forwards;
     }
 
     button:hover {
@@ -59,8 +63,11 @@
       padding: 50px;
       border-radius: 20px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
-      width: 600px; /* 🔥 Plus large sur PC */
-      max-width: 90%; /* 🔥 Ajuste sur téléphone */
+      width: 600px;
+      max-width: 90%;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: zoomIn 1.5s ease forwards 1s;
     }
 
     h2 {
@@ -95,12 +102,29 @@
       animation: pulse 1s infinite alternate;
     }
 
+    /* 💥 Effets d’apparition */
+    @keyframes zoomIn {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     @keyframes pulse {
       from { box-shadow: 0 0 10px #00ffcc; }
       to { box-shadow: 0 0 35px #00ffcc; }
     }
 
-    /* ✅ Adaptation sur téléphone */
+    /* 📱 Adaptation mobile */
     @media screen and (max-width: 768px) {
       h1 {
         font-size: 45px;
