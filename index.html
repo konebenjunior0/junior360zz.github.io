@@ -1,243 +1,27 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Site de Junior 😎</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      color: white;
-      margin: 0;
-      padding: 0;
-      background: url('IMG_1864.jpeg') no-repeat center center fixed;
-      background-size: cover;
-    }
+import random
 
-    h1 {
-      margin-top: 120px;
-      font-size: 50px;
-      text-shadow: 2px 2px 6px black;
-    }
+print("🎮 Bienvenue dans le jeu : Devine le nombre !")
 
-    p {
-      margin-top: -5px;
-      font-size: 26px;
-      text-shadow: 1px 1px 4px black;
-    }
+# L’ordinateur choisit un nombre aléatoire entre 1 et 20
+nombre_secret = random.randint(1, 20)
 
-    button {
-      background-color: #007bff;
-      color: white;
-      font-size: 26px;
-      padding: 18px 40px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+# On donne 5 tentatives au joueur
+tentatives = 5
 
-    button:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
-    }
+while tentatives > 0:
+    print(f"\nIl te reste {tentatives} tentatives.")
+    # Le joueur entre un nombre
+    essai = int(input("👉 Devine un nombre entre 1 et 20 : "))
 
-    form {
-      background-color: rgba(0, 0, 0, 0.8);
-      display: inline-block;
-      margin-top: 40px;
-      padding: 55px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-      width: 450px;
-      max-width: 95%;
-    }
+    if essai == nombre_secret:
+        print("🎉 Bravo ! Tu as trouvé le nombre !")
+        break
+    elif essai < nombre_secret:
+        print("Trop petit ! Essaie encore.")
+    else:
+        print("Trop grand ! Essaie encore.")
 
-    input {
-      display: block;
-      width: 90%;
-      padding: 18px;
-      margin: 12px auto;
-      border: none;
-      border-radius: 10px;
-      font-size: 22px;
-    }
+    tentatives -= 1
 
-    .submit-btn {
-      background-color: #28a745;
-      color: white;
-      margin-top: 14px;
-      font-size: 24px;
-      padding: 18px;
-    }
-
-    .submit-btn:hover {
-      background-color: #1e7e34;
-    }
-
-    /* === Chatbot IA === */
-    #chatbot-container {
-      position: fixed;
-      bottom: 25px;
-      left: 25px;
-      z-index: 1000;
-    }
-
-    #openChat {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 90px;
-      height: 90px;
-      font-size: 40px;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-
-    #chatWindow {
-      display: none;
-      position: fixed;
-      bottom: 130px;
-      left: 15px;
-      width: 420px;
-      height: 620px;
-      background-color: white;
-      border-radius: 14px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    #chatHeader {
-      background-color: #007bff;
-      color: white;
-      padding: 18px;
-      font-weight: bold;
-      text-align: center;
-      font-size: 22px;
-    }
-
-    #chatMessages {
-      padding: 20px;
-      height: 460px;
-      overflow-y: auto;
-      font-size: 20px;
-      color: black;
-      text-align: left;
-    }
-
-    #chatInput {
-      flex: 1;
-      padding: 16px;
-      border: none;
-      font-size: 20px;
-    }
-
-    #sendBtn {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 16px 20px;
-      font-size: 20px;
-    }
-
-    /* 📱 Version téléphone : ULTRA GRANDE */
-    @media screen and (max-width: 600px) {
-      h1 { font-size: 70px; margin-top: 100px; }
-      p { font-size: 36px; }
-      button { font-size: 36px; padding: 22px 50px; }
-      form { width: 95%; padding: 65px; }
-      input { font-size: 28px; padding: 22px; }
-      .submit-btn { font-size: 30px; padding: 22px; }
-      #openChat { width: 100px; height: 100px; font-size: 44px; }
-      #chatWindow { width: 92%; height: 680px; left: 4%; bottom: 140px; }
-      #chatHeader { font-size: 26px; }
-      #chatMessages { font-size: 24px; }
-      #chatInput { font-size: 24px; padding: 18px; }
-      #sendBtn { font-size: 24px; padding: 18px 24px; }
-    }
-  </style>
-</head>
-
-<body>
-  <h1>Bienvenue sur le site de Junior 😎</h1>
-  <p>Clique sur le bouton pour visiter mon site :</p>
-
-  <a href="https://heylink.me/beendojr/" target="_blank">
-    <button>Aller sur mon site 🌍</button>
-  </a>
-
-  <form onsubmit="return envoyerInfos()">
-    <h3 style="font-size:28px;">Entre tes infos 👇</h3>
-    <input type="text" id="nom" placeholder="Ton nom" required>
-    <input type="number" id="age" placeholder="Ton âge" required>
-    <input type="email" id="email" placeholder="Ton e-mail" required>
-    <input type="password" id="motDePasse" placeholder="Ton mot de passe" required>
-    <button type="submit" class="submit-btn">Envoyer ✉️</button>
-  </form>
-
-  <!-- === BOUTON IA === -->
-  <div id="chatbot-container">
-    <button id="openChat">🤖</button>
-
-    <div id="chatWindow">
-      <div id="chatHeader">Assistant Junior 💬</div>
-      <div id="chatMessages"></div>
-      <div style="display: flex; border-top: 1px solid #ccc;">
-        <input id="chatInput" type="text" placeholder="Écris ici...">
-        <button id="sendBtn">➡️</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function envoyerInfos() {
-      const nom = document.getElementById('nom').value;
-      const age = document.getElementById('age').value;
-      const email = document.getElementById('email').value;
-      const motDePasse = document.getElementById('motDePasse').value;
-
-      alert(`Merci ${nom} (${age} ans) ! Ton e-mail (${email}) a bien été enregistré 🎉`);
-      window.location.href = "https://heylink.me/beendojr/";
-      return false;
-    }
-
-    const openChat = document.getElementById("openChat");
-    const chatWindow = document.getElementById("chatWindow");
-    const sendBtn = document.getElementById("sendBtn");
-    const chatMessages = document.getElementById("chatMessages");
-    const chatInput = document.getElementById("chatInput");
-
-    openChat.onclick = () => {
-      const visible = chatWindow.style.display === "flex";
-      chatWindow.style.display = visible ? "none" : "flex";
-      if (!visible) {
-        chatMessages.innerHTML += `<div><b>IA :</b> Salut 👋 Je suis l'assistant de Junior ! Comment puis-je t’aider ? 😎</div>`;
-      }
-    };
-
-    sendBtn.onclick = () => {
-      const userMsg = chatInput.value.trim();
-      if (userMsg === "") return;
-
-      chatMessages.innerHTML += `<div><b>Toi :</b> ${userMsg}</div>`;
-      chatInput.value = "";
-
-      setTimeout(() => {
-        let reply = "Je ne suis pas sûr d’avoir compris 😅";
-        if (userMsg.toLowerCase().includes("bonjour")) reply = "Salut 👋 ! Comment vas-tu ?";
-        else if (userMsg.toLowerCase().includes("comment")) reply = "Je vais très bien, merci 😎";
-        else if (userMsg.toLowerCase().includes("site")) reply = "Tu es sur le site officiel de Junior 💪";
-        else if (userMsg.toLowerCase().includes("merci")) reply = "Avec plaisir 😄";
-        else if (userMsg.toLowerCase().includes("boutique")) reply = "Tu peux visiter la boutique avec le bouton en haut 🛒";
-
-        chatMessages.innerHTML += `<div><b>IA :</b> ${reply}</div>`;
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 600);
-    };
-  </script>
-</body>
-</html>
-<!-- === Fin du chat IA === -->
+if tentatives == 0:
+    print(f"\n😢 Tu as perdu. Le nombre secret était {nombre_secret}.")Fin du chat IA === -->
