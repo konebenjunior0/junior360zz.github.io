@@ -1,69 +1,221 @@
-<!-- === Chat IA simple intégré === -->
-<div id="chatbot-container" style="position: fixed; bottom: 20px; right: 20px;">
-  <button id="openChat" style="
-    background-color: #007bff; 
-    color: white; 
-    border: none; 
-    border-radius: 50%; 
-    width: 60px; 
-    height: 60px; 
-    font-size: 25px; 
-    cursor: pointer;
-  ">💬</button>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Site de Junior 😎</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+      margin: 0;
+      padding: 0;
+      background: url('IMG_1864.jpeg') no-repeat center center fixed;
+      background-size: cover;
+    }
 
-  <div id="chatWindow" style="
-    display: none; 
-    position: fixed; 
-    bottom: 90px; 
-    right: 20px; 
-    width: 300px; 
-    height: 400px; 
-    background-color: white; 
-    border-radius: 10px; 
-    box-shadow: 0 0 10px rgba(0,0,0,0.3); 
-    overflow: hidden; 
-    flex-direction: column;
-  ">
-    <div id="chatHeader" style="background-color: #007bff; color: white; padding: 10px; font-weight: bold;">🤖 Assistant Junior</div>
-    <div id="chatMessages" style="padding: 10px; height: 300px; overflow-y: auto; font-size: 14px; text-align: left;"></div>
-    <div style="display: flex; border-top: 1px solid #ccc;">
-      <input id="chatInput" type="text" placeholder="Écris ici..." style="flex: 1; padding: 8px; border: none;">
-      <button id="sendBtn" style="background-color: #007bff; color: white; border: none; padding: 8px 12px;">➡️</button>
+    h1 {
+      margin-top: 100px;
+      font-size: 38px;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    p {
+      margin-top: -10px;
+      font-size: 20px;
+      text-shadow: 1px 1px 4px black;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      font-size: 20px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    form {
+      background-color: rgba(0, 0, 0, 0.8);
+      display: inline-block;
+      margin-top: 20px;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      width: 350px;
+    }
+
+    input {
+      display: block;
+      width: 90%;
+      padding: 14px;
+      margin: 8px auto;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+    }
+
+    .submit-btn {
+      background-color: #28a745;
+      color: white;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .submit-btn:hover {
+      background-color: #1e7e34;
+    }
+
+    /* === Chatbot IA === */
+    #chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    #openChat {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    #chatWindow {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      left: 20px;
+      width: 360px;
+      height: 480px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #chatHeader {
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    #chatMessages {
+      padding: 12px;
+      height: 360px;
+      overflow-y: auto;
+      font-size: 16px;
+      color: black;
+      text-align: left;
+    }
+
+    #chatInput {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    #sendBtn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Bienvenue sur le site de Junior 😎</h1>
+  <p>Clique sur le bouton pour visiter mon site :</p>
+
+  <a href="https://heylink.me/beendojr/" target="_blank">
+    <button>Aller sur mon site 🌍</button>
+  </a>
+
+  <form onsubmit="return envoyerInfos()">
+    <h3>Entre tes infos 👇</h3>
+    <input type="text" id="nom" placeholder="Ton nom" required>
+    <input type="number" id="age" placeholder="Ton âge" required>
+    <input type="email" id="email" placeholder="Ton e-mail" required>
+    <input type="password" id="motDePasse" placeholder="Ton mot de passe" required>
+    <button type="submit" class="submit-btn">Envoyer ✉️</button>
+  </form>
+
+  <!-- === BOUTON IA === -->
+  <div id="chatbot-container">
+    <button id="openChat">🤖</button>
+
+    <div id="chatWindow">
+      <div id="chatHeader">Assistant Junior 💬</div>
+      <div id="chatMessages"></div>
+      <div style="display: flex; border-top: 1px solid #ccc;">
+        <input id="chatInput" type="text" placeholder="Écris ici...">
+        <button id="sendBtn">➡️</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  const openChat = document.getElementById("openChat");
-  const chatWindow = document.getElementById("chatWindow");
-  const sendBtn = document.getElementById("sendBtn");
-  const chatMessages = document.getElementById("chatMessages");
-  const chatInput = document.getElementById("chatInput");
+  <script>
+    function envoyerInfos() {
+      const nom = document.getElementById('nom').value;
+      const age = document.getElementById('age').value;
+      const email = document.getElementById('email').value;
+      const motDePasse = document.getElementById('motDePasse').value;
 
-  openChat.onclick = () => {
-    chatWindow.style.display = chatWindow.style.display === "none" ? "flex" : "none";
-  };
+      alert(`Merci ${nom} (${age} ans) ! Ton e-mail (${email}) a bien été enregistré 🎉`);
+      window.location.href = "https://heylink.me/beendojr/";
+      return false;
+    }
 
-  sendBtn.onclick = () => {
-    const userMsg = chatInput.value.trim();
-    if (userMsg === "") return;
+    // === SCRIPT DU CHAT IA ===
+    const openChat = document.getElementById("openChat");
+    const chatWindow = document.getElementById("chatWindow");
+    const sendBtn = document.getElementById("sendBtn");
+    const chatMessages = document.getElementById("chatMessages");
+    const chatInput = document.getElementById("chatInput");
 
-    // Affiche le message utilisateur
-    chatMessages.innerHTML += `<div><b>Toi :</b> ${userMsg}</div>`;
-    chatInput.value = "";
+    openChat.onclick = () => {
+      chatWindow.style.display = chatWindow.style.display === "none" ? "flex" : "none";
+    };
 
-    // Réponse simple de l'IA
-    setTimeout(() => {
-      let reply = "Je ne suis pas sûr d’avoir compris 😅";
-      if (userMsg.toLowerCase().includes("bonjour")) reply = "Salut 👋 ! Comment vas-tu ?";
-      else if (userMsg.toLowerCase().includes("comment")) reply = "Je vais très bien, merci 😎";
-      else if (userMsg.toLowerCase().includes("site")) reply = "Tu es sur le site officiel de Junior 💪";
-      else if (userMsg.toLowerCase().includes("merci")) reply = "Avec plaisir 😄";
-      else if (userMsg.toLowerCase().includes("boutique")) reply = "Tu peux visiter la boutique en cliquant sur le bouton plus haut 🛒";
+    sendBtn.onclick = () => {
+      const userMsg = chatInput.value.trim();
+      if (userMsg === "") return;
 
-      chatMessages.innerHTML += `<div><b>IA :</b> ${reply}</div>`;
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 500);
-  };
-</script>
+      chatMessages.innerHTML += `<div><b>Toi :</b> ${userMsg}</div>`;
+      chatInput.value = "";
+
+      setTimeout(() => {
+        let reply = "Je ne suis pas sûr d’avoir compris 😅";
+        if (userMsg.toLowerCase().includes("bonjour")) reply = "Salut 👋 ! Comment vas-tu ?";
+        else if (userMsg.toLowerCase().includes("comment")) reply = "Je vais très bien, merci 😎";
+        else if (userMsg.toLowerCase().includes("site")) reply = "Tu es sur le site officiel de Junior 💪";
+        else if (userMsg.toLowerCase().includes("merci")) reply = "Avec plaisir 😄";
+        else if (userMsg.toLowerCase().includes("boutique")) reply = "Tu peux visiter la boutique avec le bouton en haut 🛒";
+
+        chatMessages.innerHTML += `<div><b>IA :</b> ${reply}</div>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 500);
+    };
+  </script>
+</body>
+</html>
 <!-- === Fin du chat IA === -->
