@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Site de Junior 😎</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,23 +17,23 @@
 
     h1 {
       margin-top: 100px;
-      font-size: 38px;
-      text-shadow: 2px 2px 5px black;
+      font-size: 42px;
+      text-shadow: 2px 2px 6px black;
     }
 
     p {
       margin-top: -10px;
-      font-size: 20px;
+      font-size: 22px;
       text-shadow: 1px 1px 4px black;
     }
 
     button {
       background-color: #007bff;
       color: white;
-      font-size: 20px;
-      padding: 14px 28px;
+      font-size: 22px;
+      padding: 16px 30px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -45,28 +46,30 @@
     form {
       background-color: rgba(0, 0, 0, 0.8);
       display: inline-block;
-      margin-top: 20px;
-      padding: 40px;
-      border-radius: 15px;
+      margin-top: 30px;
+      padding: 45px;
+      border-radius: 18px;
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      width: 350px;
+      width: 400px;
+      max-width: 90%;
     }
 
     input {
       display: block;
       width: 90%;
-      padding: 14px;
-      margin: 8px auto;
+      padding: 16px;
+      margin: 10px auto;
       border: none;
-      border-radius: 6px;
-      font-size: 17px;
+      border-radius: 8px;
+      font-size: 18px;
     }
 
     .submit-btn {
       background-color: #28a745;
       color: white;
-      margin-top: 10px;
-      font-size: 18px;
+      margin-top: 12px;
+      font-size: 20px;
+      padding: 14px;
     }
 
     .submit-btn:hover {
@@ -76,8 +79,8 @@
     /* === Chatbot IA === */
     #chatbot-container {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
+      bottom: 25px;
+      left: 25px;
       z-index: 1000;
     }
 
@@ -86,9 +89,9 @@
       color: white;
       border: none;
       border-radius: 50%;
-      width: 70px;
-      height: 70px;
-      font-size: 28px;
+      width: 75px;
+      height: 75px;
+      font-size: 32px;
       cursor: pointer;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
@@ -96,13 +99,13 @@
     #chatWindow {
       display: none;
       position: fixed;
-      bottom: 100px;
+      bottom: 110px;
       left: 20px;
-      width: 360px;
-      height: 480px;
+      width: 400px;
+      height: 550px;
       background-color: white;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
       flex-direction: column;
       overflow: hidden;
     }
@@ -110,34 +113,48 @@
     #chatHeader {
       background-color: #007bff;
       color: white;
-      padding: 12px;
+      padding: 15px;
       font-weight: bold;
       text-align: center;
-      font-size: 18px;
+      font-size: 20px;
     }
 
     #chatMessages {
-      padding: 12px;
-      height: 360px;
+      padding: 15px;
+      height: 420px;
       overflow-y: auto;
-      font-size: 16px;
+      font-size: 18px;
       color: black;
       text-align: left;
     }
 
     #chatInput {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border: none;
-      font-size: 16px;
+      font-size: 18px;
     }
 
     #sendBtn {
       background-color: #007bff;
       color: white;
       border: none;
-      padding: 10px 14px;
-      font-size: 16px;
+      padding: 12px 16px;
+      font-size: 18px;
+    }
+
+    /* 📱 Version téléphone : encore plus grand */
+    @media screen and (max-width: 600px) {
+      h1 { font-size: 55px; margin-top: 80px; }
+      p { font-size: 26px; }
+      button { font-size: 26px; padding: 18px 34px; }
+      form { width: 95%; padding: 50px; }
+      input { font-size: 22px; padding: 18px; }
+      .submit-btn { font-size: 24px; padding: 16px; }
+      #openChat { width: 85px; height: 85px; font-size: 36px; }
+      #chatWindow { width: 90%; height: 600px; left: 5%; bottom: 120px; }
+      #chatHeader { font-size: 22px; }
+      #chatMessages { font-size: 20px; }
     }
   </style>
 </head>
@@ -185,7 +202,6 @@
       return false;
     }
 
-    // === SCRIPT DU CHAT IA ===
     const openChat = document.getElementById("openChat");
     const chatWindow = document.getElementById("chatWindow");
     const sendBtn = document.getElementById("sendBtn");
@@ -193,7 +209,11 @@
     const chatInput = document.getElementById("chatInput");
 
     openChat.onclick = () => {
-      chatWindow.style.display = chatWindow.style.display === "none" ? "flex" : "none";
+      const visible = chatWindow.style.display === "flex";
+      chatWindow.style.display = visible ? "none" : "flex";
+      if (!visible) {
+        chatMessages.innerHTML += `<div><b>IA :</b> Salut 👋 Je suis l'assistant de Junior ! Comment puis-je t’aider ? 😎</div>`;
+      }
     };
 
     sendBtn.onclick = () => {
@@ -213,7 +233,7 @@
 
         chatMessages.innerHTML += `<div><b>IA :</b> ${reply}</div>`;
         chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 500);
+      }, 600);
     };
   </script>
 </body>
