@@ -1,98 +1,119 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Junior Services - Création de sites & ventes</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site de Junior 😎</title>
   <style>
-    * {
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body {
-      background: linear-gradient(to right, #1f1c2c, #928dab);
+      background: url('ton-image-de-fond.jpg') no-repeat center center/cover;
       color: white;
       text-align: center;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
     h1 {
       font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-weight: normal;
-      font-size: 1.2em;
-      color: #ddd;
-      margin-bottom: 30px;
-    }
-
-    .boutons {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      width: 250px;
-    }
-
-    button {
-      background: #00c6ff;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
       font-weight: bold;
+      margin: 20px 10px;
+      line-height: 1.3em;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s;
+      font-size: 1.2em;
+      margin: 15px 0;
     }
 
-    button:hover {
-      background: #0072ff;
-      transform: scale(1.05);
+    .btn:hover {
+      background-color: #0056b3;
     }
 
-    .contact {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #ccc;
+    .form-section {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      width: 90%;
+      max-width: 400px;
     }
 
-    .contact p {
-      margin: 5px 0;
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      text-align: center;
     }
 
-    footer {
-      margin-top: 50px;
-      font-size: 13px;
-      color: #aaa;
+    #aiButton {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.8em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2em;
+      }
+      .btn {
+        font-size: 1.1em;
+        padding: 12px 20px;
+      }
+      input {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🌐 Junior Services</h1>
-  <h2>Création de sites web | Vente de produits | Affiches et événements</h2>
 
-  <div class="boutons">
-    <button onclick="window.location.href='https://www.google.com'">Voir nos services</button>
-    <button onclick="window.location.href='https://wa.me/2250717775410'">WhatsApp 1 📱</button>
-    <button onclick="window.location.href='https://wa.me/2250779554150'">WhatsApp 2 📞</button>
+  <div class="container">
+    <h1>Bienvenue sur le site de Junior 😎</h1>
+    <p>Clique sur le bouton pour visiter mon site :</p>
+    <button class="btn" onclick="window.location.href='https://junior360zz.github.io/boutique'">
+      Aller sur mon site 🌍
+    </button>
   </div>
 
-  <div class="contact">
-    <p>📧 Contactez-nous pour vos projets personnalisés !</p>
-    <p>Disponible 24h/24 sur WhatsApp</p>
+  <div class="form-section">
+    <h2>Entre tes infos 👇</h2>
+    <input type="text" placeholder="Ton nom" />
+    <input type="number" placeholder="Ton âge" />
   </div>
 
-  <footer>
-    © 2025 Junior Services - Tous droits réservés
-  </footer>
+  <button id="aiButton">🤖</button>
+
 </body>
 </html>
