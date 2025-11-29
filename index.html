@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Site de Junior 😎</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,147 +15,155 @@
       background-size: cover;
     }
 
-    h1 {
-      margin-top: 100px;
-      font-size: 64px;
-      text-shadow: 3px 3px 8px black;
-    }
-
-    p {
-      margin-top: -10px;
-      font-size: 34px;
-      text-shadow: 2px 2px 6px black;
-    }
+    h1 { margin-top: 80px; font-size: 50px; text-shadow: 3px 3px 8px black; }
+    p { margin-top: -10px; font-size: 28px; text-shadow: 2px 2px 6px black; }
 
     button {
       background-color: #007bff;
       color: white;
-      font-size: 30px;
-      padding: 25px 50px;
+      font-size: 24px;
+      padding: 20px 40px;
       border: none;
       border-radius: 15px;
       cursor: pointer;
       transition: 0.3s;
-      margin: 15px;
+      margin: 10px;
     }
-
-    button:hover {
+    button.disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+    button.enabled:hover {
       background-color: #0056b3;
       transform: scale(1.05);
     }
 
     form {
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(0,0,0,0.85);
       display: inline-block;
-      margin-top: 40px;
-      padding: 50px;
+      margin-top: 30px;
+      padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
       width: 90%;
-      max-width: 600px;
+      max-width: 400px;
     }
 
-    h3 {
-      font-size: 32px;
-      margin-bottom: 20px;
-    }
-
+    h3 { font-size: 28px; margin-bottom: 20px; }
     input {
       display: block;
-      width: 95%;
-      padding: 24px;
-      margin: 15px auto;
+      width: 90%;
+      padding: 20px;
+      margin: 12px auto;
       border: none;
       border-radius: 10px;
-      font-size: 26px;
+      font-size: 20px;
     }
 
     .submit-btn {
       background-color: #28a745;
       color: white;
       margin-top: 20px;
-      font-size: 28px;
-      padding: 24px 40px;
+      font-size: 22px;
+      padding: 20px 30px;
     }
+    .submit-btn:hover { background-color: #1e7e34; }
 
-    .submit-btn:hover {
-      background-color: #1e7e34;
-    }
-
-    /* Panier flottant */
     #cart-icon {
       position: fixed;
-      bottom: 35px;
-      right: 35px;
+      bottom: 25px;
+      right: 25px;
       background-color: #ffcc00;
       color: black;
-      font-size: 46px;
-      padding: 28px;
+      font-size: 40px;
+      padding: 25px;
       border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
       transition: 0.3s;
     }
+    #cart-icon:hover { transform: scale(1.1); }
 
-    #cart-icon:hover {
-      transform: scale(1.1);
-    }
-
-    /* Mobile */
     @media (max-width: 600px) {
-      h1 { font-size: 72px; }
-      p { font-size: 36px; }
-      button { font-size: 32px; padding: 26px 55px; }
-      form { width: 92%; padding: 55px; }
-      input { font-size: 28px; padding: 26px; }
-      .submit-btn { font-size: 30px; }
-      #cart-icon { font-size: 48px; padding: 30px; bottom: 35px; right: 35px; }
+      h1 { font-size: 40px; }
+      p { font-size: 24px; }
+      button { font-size: 20px; padding: 18px 35px; margin: 8px; }
+      form { padding: 35px; width: 95%; }
+      input { font-size: 18px; padding: 18px; }
+      .submit-btn { font-size: 20px; padding: 18px 25px; }
+      #cart-icon { font-size: 42px; padding: 22px; bottom: 20px; right: 20px; }
     }
   </style>
 </head>
 <body>
-  <h1>Bienvenue sur le site de Junior 😎</h1>
-  <p>Clique sur un bouton pour continuer :</p>
 
-  <a href="https://heylink.me/beendojr/" target="_blank">
-    <button>Aller sur mon site 🌍</button>
-  </a>
-  <a href="boutique.html">
-    <button>🛍️ Boutique</button>
-     <a class="btn" href="boutique.html">Accéder à la boutique</a> 
-  </a>
+<h1>Bienvenue sur le site de Junior 😎</h1>
+<p>Remplis tes infos avant d'accéder au site 👇</p>
 
-  <form onsubmit="return envoyerInfos()">
-    <h3>Entre tes infos 👇</h3>
-    <input type="text" id="nom" placeholder="Ton nom" required>
-    <input type="number" id="age" placeholder="Ton âge" required>
-    <input type="email" id="email" placeholder="Ton e-mail" required>
-    <input type="password" id="motDePasse" placeholder="Ton mot de passe" required>
-    <button type="submit" class="submit-btn">Envoyer ✉️</button>
-  </form>
+<!-- BOUTONS SÉPARÉS, CLASSE disabled par défaut -->
+<button id="siteBtn" class="disabled" onclick="allerSite()">Aller sur mon site 🌍</button>
+<button id="boutiqueBtn" class="disabled" onclick="allerBoutique()">🛍️ Boutique</button>
 
-  <div id="cart-icon" onclick="ouvrirPanier()">🛒</div>
+<!-- FORMULAIRE -->
+<form id="contactForm">
+  <h3>Entre tes infos 👇</h3>
+  <input type="text" name="name" id="nom" placeholder="Ton nom" required>
+  <input type="number" name="age" id="age" placeholder="Ton âge" required>
+  <input type="email" name="email" id="email" placeholder="Ton email" required>
+  <input type="password" name="password" id="motDePasse" placeholder="Crée un mot de passe" required>
+  <button type="submit" class="submit-btn">Envoyer ✉️</button>
+</form>
 
-  <script>
-    function envoyerInfos() {
-      const nom = document.getElementById('nom').value;
-      const age = document.getElementById('age').value;
-      const email = document.getElementById('email').value;
-      const motDePasse = document.getElementById('motDePasse').value;
+<div id="cart-icon" onclick="ouvrirPanier()">🛒</div>
 
-      if (motDePasse !== "junior123") {
-        alert("Mot de passe incorrect ❌");
-        return false;
-      }
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  emailjs.init('QcAA3sWRk3FHx5rZq'); // Ta Public Key
 
-      alert(`Merci ${nom} (${age} ans) ! Ton e-mail (${email}) est bien enregistré 🎉`);
+  const siteBtn = document.getElementById('siteBtn');
+  const boutiqueBtn = document.getElementById('boutiqueBtn');
+
+  document.getElementById('contactForm').addEventListener('submit', function(event){
+    event.preventDefault();
+
+    const password = document.getElementById('motDePasse').value.trim();
+    if(password.length < 4){
+      alert("Le mot de passe doit contenir au moins 4 caractères.");
+      return;
+    }
+
+    // Envoi via EmailJS
+    emailjs.sendForm('service_md3prj8', 'template_ttg2ab1', this)
+      .then(() => {
+        alert("Merci ! Tes infos ont été envoyées ✔️");
+
+        // Débloquer les boutons
+        siteBtn.classList.remove('disabled');
+        siteBtn.classList.add('enabled');
+
+        boutiqueBtn.classList.remove('disabled');
+        boutiqueBtn.classList.add('enabled');
+      })
+      .catch(err => alert("Erreur : " + JSON.stringify(err)));
+  });
+
+  // Fonction pour rediriger uniquement si bouton débloqué
+  function allerSite() {
+    if(siteBtn.classList.contains('enabled')){
       window.location.href = "https://heylink.me/beendojr/";
-      return false;
     }
+  }
 
-    function ouvrirPanier() {
-      alert("Ton panier est vide pour le moment 🛒");
+  function allerBoutique() {
+    if(boutiqueBtn.classList.contains('enabled')){
+      window.location.href = "boutique.html";
     }
-  </script>
+  }
+
+  function ouvrirPanier() {
+    alert("Ton panier est vide 🛒");
+  }
+</script>
+
 </body>
 </html>
